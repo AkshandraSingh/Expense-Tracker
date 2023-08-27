@@ -235,5 +235,28 @@ module.exports = {
                 error: error.message,
             });
         }
+    },
+
+    changeProfilePic: async (req, res) => {
+        try {
+            const { userId } = req.params
+            const userData = await userSchema.findById(userId)
+            const filePath = `/uploads/userProfilePics/${req.file.filename}`;
+            userData.userProfilePic = filePath;
+            await userData.save()
+            res.status(200).send({
+                success: true,
+                message: "Profile Pic updated!",
+                userData: userData
+            })
+        } catch (error) {
+            req.file ? unlinkSync(req.file.path) : nul
+            userLogger.log('error', `Error: ${error.message}`)
+            res.status(500).json({
+                success: false,
+                message: "Error",
+                error: error.message,
+            });
+        }
     }
 }
