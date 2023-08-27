@@ -12,3 +12,14 @@ level error: Aug-27-2023 14:54:21 	Invalid expense category
 level info: Aug-27-2023 14:57:53 	Expense created!
 level info: Aug-27-2023 17:36:29 	Expense created!
 level info: Aug-27-2023 17:59:35 	Expense created!
+level info: Aug-27-2023 22:56:29 	All expense found
+level info: Aug-27-2023 22:56:43 	All expense found
+level info: Aug-27-2023 22:56:53 	All expense found
+level info: Aug-27-2023 22:57:33 	Expense created!
+level info: Aug-27-2023 22:57:39 	All expense found
+level info: Aug-27-2023 22:57:49 	All expense found
+level info: Aug-27-2023 22:58:49 	All expense found
+level error: Aug-27-2023 22:59:13 	Error: Cannot do exclusion on field id in inclusion projection
+level info: Aug-27-2023 22:59:23 	All expense found
+level info: Aug-27-2023 22:59:37 	All expense found
+level info: Aug-27-2023 23:00:29 	All expense found

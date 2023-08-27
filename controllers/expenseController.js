@@ -204,5 +204,52 @@ module.exports = {
                 error: error.message
             });
         }
+    },
+
+    allExpense: async (req, res) => {
+        try {
+            const { userId } = req.params
+            const expenseData = await expenseSchema.find({
+                userId: userId
+            }).select('expenseName')
+            expenseLogger.log('info', "All expense found")
+            res.status(200).send({
+                success: true,
+                message: "All expense found",
+                expenseData: expenseData
+            })
+        } catch (error) {
+            expenseLogger.log('error', `Error: ${error.message}`)
+            res.status(500).send({
+                success: false,
+                message: "Error!!",
+                error: error.message
+            });
+        }
+    },
+
+    todayExpense: async (req, res) => {
+        try {
+            const { userId } = req.params
+            const today = new Date();
+            const startOfDay = new Date(today).setHours(0, 0, 0, 0);
+            const endOfDay = new Date(today).setHours(23, 59, 59, 999);
+            const expenseData = await expenseSchema.find({
+                userId: userId,
+                createdAt: { $gte: startOfDay, $lte: endOfDay },
+            })
+            res.status(200).send({
+                success: true,
+                message: "Today expenses!",
+                expenseData: expenseData
+            })
+        } catch (error) {
+            expenseLogger.log('error', `Error: ${error.message}`)
+            res.status(500).send({
+                success: false,
+                message: "Error!!",
+                error: error.message
+            });
+        }
     }
 };
