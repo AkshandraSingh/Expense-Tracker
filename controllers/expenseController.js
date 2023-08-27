@@ -111,5 +111,98 @@ module.exports = {
                 error: error.message,
             });
         }
+    },
+
+    searchByName: async (req, res) => {
+        try {
+            const { userId } = req.params;
+            const { userSearch } = req.query;
+            const expenses = await expenseSchema.find({
+                userId: userId,
+                expenseName: new RegExp(userSearch, 'i'),
+            });
+            if (expenses.length === 0) {
+                expenseLogger.log('error', "No expense found")
+                return res.status(404).send({
+                    success: false,
+                    message: "No expense found"
+                });
+            }
+            expenseLogger.log('info', "Expenses found successfully")
+            res.status(200).json({
+                success: true,
+                message: "Expenses found successfully",
+                expenses: expenses,
+            });
+        } catch (error) {
+            expenseLogger.log('error', `Error: ${error.message}`)
+            res.status(500).json({
+                success: false,
+                message: "Error",
+                error: error.message,
+            });
+        }
+    },
+
+    searchByCategory: async (req, res) => {
+        try {
+            const { userId } = req.params;
+            const { userSearch } = req.query;
+            const expenses = await expenseSchema.find({
+                userId: userId,
+                expenseCategory: new RegExp(userSearch, 'i')
+            });
+            if (expenses.length === 0) {
+                expenseLogger.log('error', "No expense found")
+                return res.status(404).send({
+                    success: false,
+                    message: "No expense found"
+                });
+            }
+            expenseLogger.log('info', "Expenses found successfully")
+            res.status(200).json({
+                success: true,
+                message: "Expenses found successfully",
+                expenses: expenses,
+            });
+        } catch (error) {
+            expenseLogger.log('error', `Error: ${error.message}`)
+            res.status(500).json({
+                success: false,
+                message: "Error",
+                error: error.message,
+            });
+        }
+    },
+
+    searchByDate: async (req, res) => {
+        try {
+            const { userId } = req.params
+            const { startDate, endDate } = req.query;
+            const expenseData = await expenseSchema.find({
+                userId: userId,
+                createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) }
+            })
+            if (expenseData.length === 0) {
+                expenseLogger.log('error', "No expense found")
+                return res.status(404).send({
+                    success: false,
+                    message: "No expense found"
+                });
+            }
+            expenseLogger.log('info', "Expenses found successfully")
+            res.status(200).send({
+                success: true,
+                message: "Expense founded successfully",
+                data: expenseData
+            });
+        } catch (error) {
+            expenseLogger.log('error', `Error: ${error.message}`)
+            res.status(500).send({
+                success: false,
+                message: "Error!!",
+                error: error.message
+            });
+        }
     }
 };
