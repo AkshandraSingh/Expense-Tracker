@@ -1,0 +1,9 @@
+level error: Aug-27-2023 13:47:35 	Error: userId is not defined
+level error: Aug-27-2023 13:48:37 	Error: empSchema is not defined
+level info: Aug-27-2023 13:49:10 	Expense edited successfully
+level info: Aug-27-2023 13:49:29 	Expense edited successfully
+level error: Aug-27-2023 13:50:55 	Invalid expense category
+level error: Aug-27-2023 13:51:08 	Invalid expense category
+level info: Aug-27-2023 14:00:49 	Expense delete successfully
+level info: Aug-27-2023 14:01:08 	Expense delete successfully
+level info: Aug-27-2023 14:01:34 	Expense delete successfully

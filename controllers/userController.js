@@ -204,7 +204,7 @@ module.exports = {
                         const salt = await bcrypt.genSalt(10);
                         const bcryptPassword = await bcrypt.hash(newPassword, salt);
                         userData.userPassword = bcryptPassword;
-                        userData.usedPasswords.push(newPassword);
+                        userData.usedPasswords.push(bcryptPassword);
                         emailSender.mailOptions(userData.userEmail, 2)
                         await userData.save();
                         userLogger.log('info', "Your Password is updated!")
