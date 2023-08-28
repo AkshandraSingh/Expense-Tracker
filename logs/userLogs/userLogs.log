@@ -10,3 +10,9 @@ level info: Aug-27-2023 15:06:02 	Your Password is updated!
 level info: Aug-27-2023 15:07:04 	Your Password is updated!
 level error: Aug-27-2023 15:38:28 	User already exists with this email
 level error: Aug-27-2023 22:39:29 	Email or Password is incorrect
+level info: Aug-28-2023 21:20:05 	User account is created!
+level error: Aug-28-2023 21:21:31 	User email not found
+level info: Aug-28-2023 21:22:50 	User account is created!
+level error: Aug-28-2023 21:23:21 	User email not found
+level info: Aug-28-2023 21:24:03 	User account is created!
+level info: Aug-28-2023 21:24:18 	User login success!

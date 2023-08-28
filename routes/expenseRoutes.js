@@ -16,5 +16,6 @@ router.get('/allExpense/:userId', userAuthentication, expense.allExpense)
 router.get('/todayExpense/:userId', userAuthentication, expense.todayExpense)
 router.get('/expenseDetails/:expenseId', userAuthentication, expense.expenseDetails)
 router.post('/expenseReminder/:userId', userAuthentication, expense.expenseReminder)
+router.get('/monthExpenses/:userId', userAuthentication, expense.monthExpenses)
 
 module.exports = router

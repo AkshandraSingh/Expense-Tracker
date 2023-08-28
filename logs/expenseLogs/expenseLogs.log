@@ -26,3 +26,12 @@ level info: Aug-27-2023 23:00:29 	All expense found
 level info: Aug-27-2023 23:58:26 	Expense details found
 level info: Aug-27-2023 23:59:25 	Expense details found
 level info: Aug-28-2023 12:30:04 	Expense reminder sent for Groceries
+level info: Aug-28-2023 15:58:05 	Expense reminder sent for Groceries
+level info: Aug-28-2023 20:57:00 	Expense created!
+level info: Aug-28-2023 21:01:20 	Expense created!
+level error: Aug-28-2023 21:15:19 	Error: moment is not defined
+level error: Aug-28-2023 21:28:10 	Invalid expense category
+level info: Aug-28-2023 21:28:24 	Expense created!
+level info: Aug-28-2023 21:28:51 	Expense created!
+level info: Aug-28-2023 21:29:35 	Expense created!
+level info: Aug-28-2023 21:30:52 	Expense edited successfully

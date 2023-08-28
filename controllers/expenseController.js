@@ -1,4 +1,5 @@
 const schedule = require('node-schedule')
+const moment = require('moment')
 
 const expenseSchema = require('../models/expenseModel');
 const userSchema = require('../models/userModel')
@@ -241,10 +242,19 @@ module.exports = {
             const expenseData = await expenseSchema.find({
                 userId: userId,
                 createdAt: { $gte: startOfDay, $lte: endOfDay },
-            }).select('expenseName')
+            }).select('expenseName expenseAmount')
+            const expenseAmount = await expenseSchema.find({
+                userId: userId,
+                createdAt: { $gte: startOfDay, $lte: endOfDay },
+            })
+            let totalExpense = 0
+            expenseAmount.forEach((expense) => {
+                totalExpense += expense.expenseAmount;
+            })
             res.status(200).send({
                 success: true,
                 message: "Today expenses!",
+                totalExpense: totalExpense,
                 expenseData: expenseData
             })
         } catch (error) {
@@ -292,6 +302,41 @@ module.exports = {
                 success: true,
                 message: "Expense reminder scheduled successfully"
             });
+        } catch (error) {
+            expenseLogger.log('error', `Error: ${error.message}`);
+            res.status(500).send({
+                success: false,
+                message: "Error!!",
+                error: error.message
+            });
+        }
+    },
+
+    monthExpenses: async (req, res) => {
+        try {
+            const { userId } = req.params;
+            const today = moment();
+            const startOfMonth = today.clone().startOf('month');
+            const endOfMonth = today.clone().endOf('month');
+            const expensesData = await expenseSchema.find({
+                userId: userId,
+                createdAt: { $gte: startOfMonth, $lte: endOfMonth },
+            }).select('expenseName expenseAmount')
+            const expenseAmount = await expenseSchema.find({
+                userId: userId,
+                createdAt: { $gte: startOfMonth, $lte: endOfMonth },
+            })
+            let totalAmount = 0
+            expenseAmount.forEach((expense) => {
+                totalAmount += expense.expenseAmount;
+            })
+            expenseLogger.log('info', "This month expense found!")
+            res.status(200).send({
+                success: true,
+                message: "This month expense are",
+                totalAmount: totalAmount,
+                expensesData: expensesData
+            })
         } catch (error) {
             expenseLogger.log('error', `Error: ${error.message}`);
             res.status(500).send({
