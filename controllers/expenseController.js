@@ -1,6 +1,10 @@
+const schedule = require('node-schedule')
+
 const expenseSchema = require('../models/expenseModel');
+const userSchema = require('../models/userModel')
 const categorySchema = require('../models/categoryModel');
 const expenseLogger = require('../utils/expenseLogger/expenseLogger')
+const emailSender = require('../services/emailService')
 
 module.exports = {
     createExpense: async (req, res) => {
@@ -120,7 +124,7 @@ module.exports = {
             const expenses = await expenseSchema.find({
                 userId: userId,
                 expenseName: new RegExp(userSearch, 'i'),
-            });
+            }).select('expenseName')
             if (expenses.length === 0) {
                 expenseLogger.log('error', "No expense found")
                 return res.status(404).send({
@@ -151,7 +155,7 @@ module.exports = {
             const expenses = await expenseSchema.find({
                 userId: userId,
                 expenseCategory: new RegExp(userSearch, 'i')
-            });
+            }).select('expenseName')
             if (expenses.length === 0) {
                 expenseLogger.log('error', "No expense found")
                 return res.status(404).send({
@@ -182,7 +186,7 @@ module.exports = {
             const expenseData = await expenseSchema.find({
                 userId: userId,
                 createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) }
-            })
+            }).select('expenseName')
             if (expenseData.length === 0) {
                 expenseLogger.log('error', "No expense found")
                 return res.status(404).send({
@@ -237,7 +241,7 @@ module.exports = {
             const expenseData = await expenseSchema.find({
                 userId: userId,
                 createdAt: { $gte: startOfDay, $lte: endOfDay },
-            })
+            }).select('expenseName')
             res.status(200).send({
                 success: true,
                 message: "Today expenses!",
@@ -265,6 +269,31 @@ module.exports = {
             })
         } catch (error) {
             expenseLogger.log('error', `Error: ${error.message}`)
+            res.status(500).send({
+                success: false,
+                message: "Error!!",
+                error: error.message
+            });
+        }
+    },
+
+    expenseReminder: async (req, res) => {
+        try {
+            const { userId } = req.params
+            const { expenseName, message, expenseAmount, time } = req.body;
+            const userData = await userSchema.findById(userId)
+            const userEmail = userData.userEmail
+            const scheduleTime = new Date(time);
+            schedule.scheduleJob(scheduleTime, async () => {
+                await emailSender.expenseReminder(userEmail, expenseName, message, expenseAmount)
+                expenseLogger.log('info', `Expense reminder sent for ${expenseName}`);
+            });
+            res.status(200).send({
+                success: true,
+                message: "Expense reminder scheduled successfully"
+            });
+        } catch (error) {
+            expenseLogger.log('error', `Error: ${error.message}`);
             res.status(500).send({
                 success: false,
                 message: "Error!!",
