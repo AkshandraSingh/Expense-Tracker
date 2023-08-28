@@ -14,5 +14,6 @@ router.get('/searchByCategory/:userId', userAuthentication, expense.searchByCate
 router.get('/searchByDate/:userId', userAuthentication, expense.searchByDate)
 router.get('/allExpense/:userId', expense.allExpense)
 router.get('/todayExpense/:userId', expense.todayExpense)
+router.get('/expenseDetails/:expenseId', expense.expenseDetails)
 
 module.exports = router

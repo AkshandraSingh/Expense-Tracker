@@ -251,5 +251,25 @@ module.exports = {
                 error: error.message
             });
         }
+    },
+
+    expenseDetails: async (req, res) => {
+        try {
+            const { expenseId } = req.params
+            const expenseData = await expenseSchema.findById(expenseId).select('expenseName expenseDescription expenseAmount expenseDate expenseCategory')
+            expenseLogger.log('info', "Expense details found")
+            res.status(200).send({
+                success: true,
+                message: "Expense details found",
+                expenseData: expenseData
+            })
+        } catch (error) {
+            expenseLogger.log('error', `Error: ${error.message}`)
+            res.status(500).send({
+                success: false,
+                message: "Error!!",
+                error: error.message
+            });
+        }
     }
 };
