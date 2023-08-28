@@ -31,7 +31,7 @@ The Expense Tracker project is designed to help users manage their expenses effe
 
 ## 2. Installation <a name="installation"></a>
 
-1. Clone the repository: `git clone https://github.com/your-username/expense-tracker.git`
+1. Clone the repository: `git clone https://github.com/ishansingh1010/Expense-Tracker`
 2. Navigate to the project directory: `cd expense-tracker`
 3. Install dependencies: `npm install`
 4. Configure environment variables (e.g., database connection, email service credentials).
