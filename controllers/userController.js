@@ -189,7 +189,7 @@ module.exports = {
             if (checkPassword) {
                 if (confirmPassword === newPassword) {
                     for (const usedPassword of userData.usedPasswords) {
-                        if (usedPassword === newPassword) {
+                        if (await bcrypt.compare(newPassword, usedPassword)) {
                             isPasswordExist = true;
                             break;
                         }
